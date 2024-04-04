@@ -25,6 +25,8 @@ final class InternetShop {
         System.out.println(DataStorage.customers);
         readData(productsF);
         readData(ordersF);
+
+
     }
 
     /**
@@ -101,46 +103,42 @@ final class InternetShop {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
-    void writeData(ObjectType type) {
-        switch (type) {
-            case PRODUCT:
-                unloadDate(, DataStorage.products, ObjectType.PRODUCT);
-                break;
-            case CUSTOMER:
-                unloadDate(file, DataStorage.customers, ObjectType.CUSTOMER);
-                break;
-            case ORDER:
-                unloadDate(file, DataStorage.orders, ObjectType.ORDER);
-                break;
-            default:
-                System.out.println("Incorrect type");
-                break;
+    void writeData(Object object) {
+
+        if (object instanceof Product) {
+            unloadDate(productsF, DataStorage.products, ObjectType.PRODUCT);
+             }
+        if (object instanceof Customer) {
+            unloadDate(customerF, DataStorage.customers, ObjectType.CUSTOMER);
         }
+        if (object instanceof Order) {
+            unloadDate(ordersF, DataStorage.orders, ObjectType.ORDER);
+        }
+
     }
-    void unloadDate (File file, List list, ObjectType type){
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                try (final ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("androids.dat"))) {
+    void unloadDate (File file, List list, Object object){
+            try (BufferedWriter bw = new BufferedWriter (new FileWriter(file, true))) {
+                {
 
-                    switch (type) {
-                        case PRODUCT -> {
-                            final Product product = (Product) inputStream.readObject();
-                            System.out.println(product);
-                        }
-
-                        case CUSTOMER -> {
-                            final Customer customer = (Customer) inputStream.readObject();
-
-                            System.out.println(customer);
+                    switch (file.getName()) {
+                        case "products.txt": {
+                            bw.write(String.valueOf(object));
 
                         }
-                        case ORDER -> {
-                            final Order order = (Order) inputStream.readObject();
+
+                        case "customers.txt": {
+                            bw.write(String.valueOf(object));
+
+
+
                         }
-                        default -> System.out.println("Incorrect type");
+                        case "orders.txt": {
+                            bw.write(String.valueOf(object));
+                        }
+
                     }
-            } catch (ClassNotFoundException e) {
-                 throw new RuntimeException(e);
-                }
+            }
+
             } catch (FileNotFoundException e) {
                 System.out.println("File not found: " + e);
             } catch (IOException e) {

@@ -30,7 +30,7 @@ public class Application {
                 {DataStorage.customers.get(2), DataStorage.products.get(1), 333, Celebration.NONE},
                 // incorrect product
                 {DataStorage.customers.get(3), new Product("Car", 100_000), 2, Celebration.NONE},
-                // incorrect customer
+//                 incorrect customer
                 {new Customer("Alex", 33, "+112", Gender.MALE), DataStorage.products.get(2), 5,
                         Celebration.NONE}
         };
@@ -59,17 +59,19 @@ public class Application {
             } finally {
                 System.out.printf("Number of saved orders: %d. Total cost: %.2f\n", DataStorage.orders.size(), totalCostOrders);
                 System.out.println("-------------".repeat(10));
+//    shop.writeData(new Product(6,"car", 1222));
+
             }
         }
-        /**
-         * Создает резервную копию .txt файлов в папку "./backup"
-         */
+      /**
+//         * Создает резервную копию .txt файлов в папку "./backup"
+//         */
 
-        Files.createDirectory(Path.of("./backup"));
-        DirectoryStream<Path> dir = Files.newDirectoryStream(Path.of("."));
-        for (Path file : dir) {
+       Files.createDirectory(Path.of("./backup"));
+       DirectoryStream<Path> dir = Files.newDirectoryStream(Path.of("."));
+       for (Path file : dir) {
             if (Files.isDirectory(file)) continue;
-            Files.copy(file, Path.of("./backup/" + file.toString()));
-        }
+          Files.copy(file, Path.of("./backup/" + file.toString()));
+      }
     }
     }
