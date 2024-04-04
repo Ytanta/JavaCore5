@@ -1,0 +1,5 @@
+1,Book,15
+2,Pen,10
+3,Mobile phone,300
+4,Pencil,5
+5,Calculator,20
